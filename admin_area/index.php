@@ -68,8 +68,8 @@ include('../functions/common_function.php');
                 <button><a href="index.php?insert_brand" class="nav-link text-light bg-info my-1">Insert Brands</a></button>
                 <button><a href="index.php?view_brands" class="nav-link text-light bg-info my-1">View Brands</a></button>
                 <button><a href="index.php?list_orders" class="nav-link text-light bg-info my-1">All orders</a></button>
-                <button><a href="" class="nav-link text-light bg-info my-1">All payments</a></button>
-                <button><a href="" class="nav-link text-light bg-info my-1">List Users</a></button>
+                <button><a href="index.php?list_payments" class="nav-link text-light bg-info my-1">All payments</a></button>
+                <button><a href="index.php?list_users" class="nav-link text-light bg-info my-1">List Users</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">Logout</a></button>
             </div>
         </div>
@@ -117,6 +117,12 @@ if(isset($_GET['insert_brand'])){
                           if(isset($_GET['delete_orders'])){
                             include('delete_orders.php');
                             }
+                            if(isset($_GET['list_payments'])){
+                              include('list_payments.php');
+                              }
+                              if(isset($_GET['list_users'])){
+                                include('list_users.php');
+                                }
   ?>
 </div>
 
