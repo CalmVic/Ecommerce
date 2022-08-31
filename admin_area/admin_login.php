@@ -1,3 +1,10 @@
+<?php 
+include('../includes/connect.php');
+include('../functions/common_function.php');
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,3 +61,29 @@
     </div>
 </body>
 </html>
+
+
+<?php 
+if(isset($_POST['admin_login'])){
+   $username=$_POST['username'];
+   $password=$_POST['password'];
+
+  $select_query="select * from `admin_table` where admin_name='$username'";
+  $result=mysqli_query($con,$select_query);
+  $row_count=mysqli_num_rows($result);
+  $row_data=mysqli_fetch_assoc($result);
+
+
+    if($row_count>0){
+        $_SESSION['admin_name']=$username;
+      if(password_verify($password,$row_data['admin_password'])){
+        $_SESSION['admin_name']=$username;
+        echo "<script>alert('Login successful')</script>";
+        echo "<script>window.open('index.php','_self')</script>";
+      
+    }else{
+        echo "<script>alert('Invalid Credentials')</script>";
+    }
+}
+}
+?>

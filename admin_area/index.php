@@ -1,6 +1,7 @@
 <?php
 include('../includes/connect.php');
 include('../functions/common_function.php');
+session_start();
 ?>
 
 
@@ -25,10 +26,14 @@ include('../functions/common_function.php');
 
      body{
         overflow-x: hidden;
+        background:#e6e2df;
      }
      .product_image{
         width: 100px;
         object-fit: contain;
+     }
+     .img{
+      background-color: #e6e2df;
      }
 </style>
 </head>
@@ -36,14 +41,37 @@ include('../functions/common_function.php');
 <!-- navbar -->
 <div class="container-fluid p-0">
     <!-- first child -->
- <nav class="navbar navbar-expand-lg navbar-light bg-info">
+ <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
     <div class="container-fluid">
-       <img src="../images/icons/logo-01.png" alt="">
+       <img src="../images/icons/logo-01.png" alt="" class="img">
        <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="" class="nav-link">Welcome Guest</a>
-              </li>
+              </li> -->
+              <?php 
+if(!isset($_SESSION['admin_name'])){
+  echo  "<li class='nav-item'>
+  <a class='nav-link text-light' href=''>Welcome Guest</a>
+</li>";
+  }else{
+  echo "<li class='nav-item'>
+  <a class='nav-link text-light' href=''>Welcome ".$_SESSION['admin_name']."</a>  
+  </li> ";
+  
+
+
+
+          // if(!isset($_SESSION['admin_name'])){
+          // echo "<li class='nav-item'>
+          // <a class='nav-link' href='./admin_login.php'>Login</a>  
+          // </li> ";
+          // }else{
+          // echo "<li class='nav-item'>
+          // <a class='nav-link' href='./user_area/logout.php'>Logout</a>  
+          // </li> ";
+          // }
+          ?>
             </ul>
         </nav>
  </div>
@@ -54,10 +82,10 @@ include('../functions/common_function.php');
   </div>
     <!-- third child -->
     <div class="row">
-        <div class="col-md-12 bg-secondary p-1 d-flex align-items-center">
+        <div class="col-md-12 bg-secondary p-1 d-flex justify-content-center align-items-center">
             <div class="p-3">
                 <a href="#"><img src="../images/item-cart-05.jpg" alt=""></a>
-                <p class="text-light">Admin Name</p>
+                <p class="text-light">Admin</p>
             </div>
             <!-- button*10>a.nav-link.text-light.bg-info.my-1 -->
             <div class="button text-center">
@@ -70,7 +98,7 @@ include('../functions/common_function.php');
                 <button><a href="index.php?list_orders" class="nav-link text-light bg-info my-1">All orders</a></button>
                 <button><a href="index.php?list_payments" class="nav-link text-light bg-info my-1">All payments</a></button>
                 <button><a href="index.php?list_users" class="nav-link text-light bg-info my-1">List Users</a></button>
-                <button><a href="" class="nav-link text-light bg-info my-1">Logout</a></button>
+                <button><a href="./admin_logout.php" class="nav-link text-light bg-info my-1">Logout</a></button>
             </div>
         </div>
     </div>
@@ -123,16 +151,10 @@ if(isset($_GET['insert_brand'])){
                               if(isset($_GET['list_users'])){
                                 include('list_users.php');
                                 }
-  ?>
+                              }?>
 </div>
 
 
-<!-- last child -->
-<!-- <div class="bg-info p-3 text-center footer">
-  <p>All rights reserved &copy; Designed by Victor-2022</p>
-</div> -->
- <!-- include footer -->
- <?php include("../includes/footer.php")?>
    </div>
    
 <!-- bootstrap js link -->

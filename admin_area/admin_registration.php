@@ -1,3 +1,8 @@
+<?php
+include('../includes/connect.php');
+include('../functions/common_function.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +56,7 @@
 
                     <!-- conf password -->
                     <div class="form-outline mb-4">
-                        <label for="confirm_password" class="form-label">Password</label>
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
                         <input type="password" id="confirm_password" name="confirm_password"
                         placeholder="Confirm your pasword" required class="form-control">
                     </div>
@@ -68,3 +73,35 @@
     </div>
 </body>
 </html>
+
+<!-- php code -->
+<?php
+if(isset($_POST['admin_registration'])){
+    $username=$_POST['username'];
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    $password_hash=password_hash($password,PASSWORD_DEFAULT);
+    $confirm_password=$_POST['confirm_password'];
+
+    //select query
+    $select_query="Select * from `admin_table` where admin_name='$username' or admin_email='$email'";
+    $result=mysqli_query($con,$select_query);
+    $rows_count=mysqli_num_rows($result);
+    if($rows_count>0){
+        echo"<script>alert('Username and email already exist')</script>";
+    }elseif($password!=$confirm_password){
+        echo"<script>alert('Password do not match')</script>";
+    }
+    else{
+        // insert query
+    $insert_query="insert into `admin_table`
+    (admin_name,admin_email,admin_password)
+     values ('$username','$email','$password_hash')";
+      $sql_execute=mysqli_query($con,$insert_query);
+      if($sql_execute){
+       echo"<script>alert('Data inserted successfully')</script>";
+      }else{
+       echo "die(mysqli_error($con));";
+      }
+    }
+}
